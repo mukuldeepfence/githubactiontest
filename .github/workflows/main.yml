@@ -19,7 +19,7 @@ jobs:
       GROUP: deepfence
       COMMIT: ${{ github.sha }}
       REPO: demo-app
-      DEEPFENCE_CONSOLE_IP: 1.1.1.1
+      DEEPFENCE_CONSOLE_IP: 137.184.52.247
     steps:
     - uses: actions/checkout@v2
 
@@ -37,10 +37,10 @@ jobs:
     - name: Run Deepfence Vulnerability Mapper
       env:
         DEEPFENCE_CONSOLE_IP: ${{ env.DEEPFENCE_CONSOLE_IP }}
-        DEEPFENCE_KEY: ${{ env.GROUP }}
-        FULL_IMAGE_NAME: ${{ env.GROUP }}/${{ env.REPO }}:${{ github.sha }}
+        DEEPFENCE_KEY: b1888a5c-fc1a-4162-ba8c-f229fc9a27d3
+        FULL_IMAGE_NAME: ubuntu:latest
         FAIL_CVE_COUNT: 100 # Fail build if number of vulnerabilities found is >= this number. Set -1 to pass regardless of vulnerabilities.
-        FAIL_CVE_SCORE: 8 # Fail build if cumulative CVE score is >= this value. Set -1 to pass regardless of cve score.
+        FAIL_CVE_SCORE: 9 # Fail build if cumulative CVE score is >= this value. Set -1 to pass regardless of cve score.
       run: |
         mkdir deepfence_docker
         docker_config_path="$(pwd)/deepfence_docker"
@@ -55,8 +55,8 @@ jobs:
       uses: docker/build-push-action@v1
       if: startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/master'
       with:
-        username: ${{ secrets.DOCKER_USER }}
-        password: ${{ secrets.DOCKER_PASS }}
+        username: jo19in1
+        password: Password@123
         repository: ${{ env.GROUP }}/${{ env.REPO }}
         tag_with_ref: true
         tag_with_sha: true
